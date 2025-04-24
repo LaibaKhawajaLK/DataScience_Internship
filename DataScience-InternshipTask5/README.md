@@ -1,65 +1,85 @@
-🧠 Internship Data Science Project Guide
+🎯 Task 5 - Predicting Employee Attrition using Random Forest & SHAP Explainability
+This project aims to predict whether an employee will leave the organization using machine learning, and to interpret model predictions using SHAP (SHapley Additive exPlanations).
 
-✅ Task 5: Predicting Employee Attrition
-Objective: Predict if an employee is likely to leave the company.
-Dataset: IBM HR Analytics Dataset (Kaggle)
+📌 Objectives
+Preprocess HR dataset for binary classification
 
-🔸 Step-by-Step Workflow:
-🔹 Step 1: Environment Setup
-Install necessary libraries:
-pip install pandas numpy matplotlib seaborn scikit-learn shap lime xgboost
-🔹 Step 2: Load Dataset
-import pandas as pd
-df = pd.read_csv('WA_Fn-UseC_-HR-Employee-Attrition.csv')
-df.head()
-🔹 Step 3: EDA (Exploratory Data Analysis)
-Check nulls, datatypes, summary
+Train a Random Forest model to predict employee attrition
 
-Visualize Attrition rates:
+Evaluate model performance using classification metrics
 
-import seaborn as sns
-import matplotlib.pyplot as plt
+Visualize and explain feature importance using SHAP values
 
-sns.countplot(data=df, x='Attrition')
-plt.title('Attrition Distribution')
-plt.show()
-Explore relationships using:
-sns.boxplot(data=df, x='Attrition', y='Age')
-sns.boxplot(data=df, x='Attrition', y='MonthlyIncome')
-🔹 Step 4: Preprocessing
-Convert categorical variables
+📂 Dataset
+A structured HR dataset with various features like:
 
-Encode target variable:
-df['Attrition'] = df['Attrition'].map({'Yes': 1, 'No': 0})
-df = pd.get_dummies(df, drop_first=True)
-🔹 Step 5: Train-Test Split
-from sklearn.model_selection import train_test_split
+Age, JobSatisfaction, MonthlyIncome, DistanceFromHome, etc.
 
-X = df.drop('Attrition', axis=1)
-y = df['Attrition']
+Attrition (target): Yes / No
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-🔹 Step 6: Train Classifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report
+⚙️ Technologies Used
+Python
 
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+Pandas, NumPy
 
-print(classification_report(y_test, y_pred))
-🔹 Step 7: Explain Predictions (SHAP)
-import shap
-explainer = shap.TreeExplainer(model)
-shap_values = explainer.shap_values(X_test)
-shap.summary_plot(shap_values[1], X_test)
-🔹 Step 8: Insights & Report
-List top features affecting attrition
+Scikit-learn
 
-Suggest strategies (e.g., improve job satisfaction, reduce overtime)
+SHAP
 
-🧾 Outcome:
-Classification model to predict attrition
+Matplotlib / Seaborn (optional for visualization)
 
-SHAP explanation plots
+🧠 Model Summary
+Model Used: RandomForestClassifier
+
+Target Variable: Attrition (converted to binary: Yes → 1, No → 0)
+
+Accuracy: ~87%
+
+Class Imbalance Notice: Precision/Recall for class "1" (attrition) is low due to fewer positive samples.
+
+📊 Classification Report
+markdown
+Copy
+Edit
+              precision    recall  f1-score   support
+
+           0       0.88      1.00      0.93       255
+           1       0.75      0.08      0.14        39
+
+    accuracy                           0.87       294
+   macro avg       0.81      0.54      0.54       294
+weighted avg       0.86      0.87      0.83       294
+🔍 SHAP Explainability
+Used TreeExplainer to calculate SHAP values for the Random Forest model.
+
+Generated a bar summary plot to show the most influential features driving predictions.
+
+🔝 Top Influential Features:
+OverTime
+
+MonthlyIncome
+
+Age
+
+DistanceFromHome
+
+JobSatisfaction
+
+These features had the highest impact on attrition predictions.
+
+📁 Files Included
+employee_attrition_model.ipynb: Main Jupyter notebook with complete pipeline
+
+README.md: Project documentation
+
+(Optional) requirements.txt: For replicating the environment
+
+✅ Future Improvements
+Handle class imbalance using SMOTE or class weights
+
+Try other classifiers like XGBoost or Logistic Regression
+
+Use SHAP dependency plots for deeper insights
+
+Deploy as a Streamlit or Flask app for real-time predictions
 
