@@ -70,6 +70,8 @@ These features had the highest impact on attrition predictions.
 📁 Files Included
 employee_attrition_model.ipynb: Main Jupyter notebook with complete pipeline
 
+Visualizations.
+
 README.md: Project documentation
 
 (Optional) requirements.txt: For replicating the environment
